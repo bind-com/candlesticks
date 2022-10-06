@@ -61,7 +61,7 @@ class _PriceColumnState extends State<PriceColumn> {
               top: top,
               height:
                   widget.chartHeight + 2 * MAIN_CHART_VERTICAL_PADDING - top,
-              width: widget.width,
+              width: PRICE_BAR_WIDTH + 30,
               child: ListView(
                 padding: EdgeInsets.all(15),
                 controller: scrollController,
@@ -69,20 +69,16 @@ class _PriceColumnState extends State<PriceColumn> {
                   return AnimatedContainer(
                     duration: Duration(milliseconds: 300),
                     height: priceTileHeight,
-                    width: widget.width,
-                    child: Center(
-                      child: Row(
-                        children: [
-                          Text(
-                            "${HelperFunctions.priceToString(newHigh - priceScale * i)}",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: widget.style.primaryTextColor,
-                              fontSize: 11,
-                            ),
-                          ),
-                          Container(width: PRICE_BAR_WIDTH),
-                        ],
+                    width: PRICE_BAR_WIDTH,
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "${HelperFunctions.priceToString(newHigh - priceScale * i)}",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: widget.style.primaryTextColor,
+                          fontSize: 11,
+                        ),
                       ),
                     ),
                   );
