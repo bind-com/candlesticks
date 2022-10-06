@@ -181,29 +181,31 @@ class _MobileChartState extends State<MobileChart> {
                             flex: 3,
                             child: Stack(
                               children: [
-                                PriceColumn(
-                                  style: widget.style,
-                                  low: candlesLowPrice,
-                                  high: candlesHighPrice,
-                                  width: constraints.maxWidth,
-                                  chartHeight: chartHeight,
-                                  lastCandle: widget.candles[
-                                      widget.index < 0 ? 0 : widget.index],
-                                  onScale: (delta) {
-                                    if (manualScaleHigh == null) {
-                                      manualScaleHigh = candlesHighPrice;
-                                      manualScaleLow = candlesLowPrice;
-                                    }
-                                    setState(() {
-                                      double deltaPrice = delta /
-                                          chartHeight *
-                                          (manualScaleHigh! - manualScaleLow!);
-                                      manualScaleHigh =
-                                          manualScaleHigh! + deltaPrice;
-                                      manualScaleLow =
-                                          manualScaleLow! - deltaPrice;
-                                    });
-                                  },
+                                Container(
+                                  child: PriceColumn(
+                                    style: widget.style,
+                                    low: candlesLowPrice,
+                                    high: candlesHighPrice,
+                                    width: constraints.maxWidth,
+                                    chartHeight: chartHeight,
+                                    lastCandle: widget.candles[
+                                        widget.index < 0 ? 0 : widget.index],
+                                    onScale: (delta) {
+                                      if (manualScaleHigh == null) {
+                                        manualScaleHigh = candlesHighPrice;
+                                        manualScaleLow = candlesLowPrice;
+                                      }
+                                      setState(() {
+                                        double deltaPrice = delta /
+                                            chartHeight *
+                                            (manualScaleHigh! - manualScaleLow!);
+                                        manualScaleHigh =
+                                            manualScaleHigh! + deltaPrice;
+                                        manualScaleLow =
+                                            manualScaleLow! - deltaPrice;
+                                      });
+                                    },
+                                  ),
                                 ),
                                 Row(
                                   children: [

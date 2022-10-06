@@ -23,6 +23,10 @@ class Candle {
   /// security traded during a given period of time.
   final double volume;
 
+  final double change;
+
+  final double amplitude;
+
   bool get isBull => open <= close;
 
   Candle({
@@ -32,6 +36,8 @@ class Candle {
     required this.open,
     required this.close,
     required this.volume,
+    required this.change,
+    required this.amplitude,
   });
 
   Candle.fromJson(List<dynamic> json)
@@ -40,5 +46,7 @@ class Candle {
         low = double.parse(json[3]),
         open = double.parse(json[1]),
         close = double.parse(json[4]),
-        volume = double.parse(json[5]);
+        volume = double.parse(json[5]),
+        change = 0,
+        amplitude = 0;
 }
