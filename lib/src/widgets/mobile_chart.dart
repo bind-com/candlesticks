@@ -52,6 +52,7 @@ class MobileChart extends StatefulWidget {
 
   final Function() onReachEnd;
 
+  /// Билдер для подсказки, при лонг тапе на свечке
   final Widget Function(Candle)? tooltipBuilder;
 
   MobileChart({
