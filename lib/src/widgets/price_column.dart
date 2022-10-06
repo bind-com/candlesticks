@@ -80,11 +80,7 @@ class _PriceColumnState extends State<PriceColumn> {
                               fontSize: 11,
                             ),
                           ),
-                          Container(
-                            width: PRICE_BAR_WIDTH,
-                            height: 0.05,
-                            color: widget.style.borderColor,
-                          ),
+                          Container(width: PRICE_BAR_WIDTH),
                         ],
                       ),
                     ),
