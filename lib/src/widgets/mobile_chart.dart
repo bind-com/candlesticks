@@ -395,24 +395,6 @@ class _MobileChartState extends State<MobileChart> {
                           },
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 4, horizontal: 12),
-                        child: TopPanel(
-                          style: widget.style,
-                          onRemoveIndicator: widget.onRemoveIndicator,
-                          currentCandle: currentCandle,
-                          indicators: widget.mainWindowDataContainer.indicators,
-                          toggleIndicatorVisibility: (indicatorName) {
-                            setState(() {
-                              widget.mainWindowDataContainer
-                                  .toggleIndicatorVisibility(indicatorName);
-                            });
-                          },
-                          unvisibleIndicators: widget
-                              .mainWindowDataContainer.unvisibleIndicators,
-                        ),
-                      ),
                       Positioned(
                         right: 0,
                         bottom: 0,
