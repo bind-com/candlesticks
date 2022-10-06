@@ -177,7 +177,9 @@ class _MyAppState extends State<MyApp> {
             )
           ],
         ),
-        body: Center(
+        body: SizedBox(
+          height: 300,
+          width: double.infinity,
           child: StreamBuilder(
             stream: _channel == null ? null : _channel!.stream,
             builder: (context, snapshot) {

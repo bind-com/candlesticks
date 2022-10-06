@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:candlesticks/src/models/candle.dart';
 import 'package:flutter/material.dart';
 
