@@ -11,6 +11,7 @@ import 'package:candlesticks/src/widgets/top_panel.dart';
 import 'package:candlesticks/src/widgets/volume_widget.dart';
 import 'package:flutter/material.dart';
 import 'dash_line.dart';
+import 'package:candlesticks/src/models/tooltip_side.dart';
 
 /// This widget manages gestures
 /// Calculates the highest and lowest price of visible candles.
@@ -51,6 +52,8 @@ class MobileChart extends StatefulWidget {
 
   final Function() onReachEnd;
 
+  final Widget Function(Candle)? tooltipBuilder;
+
   MobileChart({
     required this.style,
     required this.onScaleUpdate,
@@ -64,6 +67,7 @@ class MobileChart extends StatefulWidget {
     required this.onReachEnd,
     required this.mainWindowDataContainer,
     required this.onRemoveIndicator,
+    this.tooltipBuilder,
   });
 
   @override
@@ -76,6 +80,7 @@ class _MobileChartState extends State<MobileChart> {
   bool showIndicatorNames = false;
   double? manualScaleHigh;
   double? manualScaleLow;
+  TooltipSide _tooltipSide = TooltipSide.right;
 
   @override
   Widget build(BuildContext context) {
@@ -360,19 +365,17 @@ class _MobileChartState extends State<MobileChart> {
                               ),
                             )
                           : Container(),
-                      longPressX != null
-                          ? Positioned(
-                              child: Container(
-                                width: widget.candleWidth,
-                                height: maxHeight,
-                                color: widget.style.mobileCandleHoverColor,
-                              ),
-                              right: (maxWidth - longPressX!) ~/
-                                      widget.candleWidth *
-                                      widget.candleWidth +
-                                  PRICE_BAR_WIDTH,
-                            )
-                          : Container(),
+                      if (widget.tooltipBuilder != null && longPressX != null)
+                        Align(
+                          alignment: _tooltipSide == TooltipSide.right
+                              ? Alignment.topRight
+                              : Alignment.topLeft,
+                          child: IgnorePointer(
+                            child: widget.tooltipBuilder!.call(
+                              _currentCandle(maxWidth)!,
+                            ),
+                          ),
+                        ),
                       Padding(
                         padding: const EdgeInsets.only(right: 50, bottom: 20),
                         child: GestureDetector(
@@ -470,5 +473,14 @@ class _MobileChartState extends State<MobileChart> {
         );
       },
     );
+  }
+
+  Candle? _currentCandle(double maxWidth) {
+    return longPressX == null
+        ? null
+        : widget.candles[min(
+        max((maxWidth - longPressX!) ~/ widget.candleWidth + widget.index,
+            0),
+        widget.candles.length - 1)];
   }
 }

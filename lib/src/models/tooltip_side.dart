@@ -1,0 +1,4 @@
+enum TooltipSide {
+  left,
+  right,
+}
