@@ -87,7 +87,7 @@ class _MobileChartState extends State<MobileChart> {
     return LayoutBuilder(
       builder: (context, constraints) {
         // determine charts width and height
-        final double maxWidth = constraints.maxWidth - PRICE_BAR_WIDTH;
+        final double maxWidth = constraints.maxWidth;
         final double maxHeight = constraints.maxHeight - DATE_BAR_HEIGHT;
 
         // visible candles start and end indexes
@@ -323,51 +323,14 @@ class _MobileChartState extends State<MobileChart> {
                           ),
                         ],
                       ),
-                      longPressY != null
+                      longPressX != null
                           ? Positioned(
-                              top: longPressY! - 10,
-                              child: Row(
-                                children: [
-                                  DashLine(
-                                    length: maxWidth,
-                                    color: widget.style.borderColor,
-                                    direction: Axis.horizontal,
-                                    thickness: 0.5,
-                                  ),
-                                  Container(
-                                    color: widget
-                                        .style.hoverIndicatorBackgroundColor,
-                                    child: Center(
-                                      child: Text(
-                                        longPressY! < maxHeight * 0.75
-                                            ? HelperFunctions.priceToString(
-                                                high -
-                                                    (longPressY! - 20) /
-                                                        (maxHeight * 0.75 -
-                                                            40) *
-                                                        (high - low))
-                                            : HelperFunctions.addMetricPrefix(
-                                                HelperFunctions.getRoof(
-                                                        volumeHigh) *
-                                                    (1 -
-                                                        (longPressY! -
-                                                                maxHeight *
-                                                                    0.75 -
-                                                                10) /
-                                                            (maxHeight * 0.25 -
-                                                                10))),
-                                        style: TextStyle(
-                                          color:
-                                              widget.style.secondaryTextColor,
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                    ),
-                                    width: PRICE_BAR_WIDTH,
-                                    height: 20,
-                                  ),
-                                ],
+                              child: Container(
+                                width: 1,
+                                height: maxHeight - 8,
+                                color: widget.style.mobileCandleHoverColor,
                               ),
+                              right: (maxWidth - longPressX!),
                             )
                           : Container(),
                       if (widget.tooltipBuilder != null && longPressX != null)
@@ -484,8 +447,8 @@ class _MobileChartState extends State<MobileChart> {
     return longPressX == null
         ? null
         : widget.candles[min(
-        max((maxWidth - longPressX!) ~/ widget.candleWidth + widget.index,
-            0),
-        widget.candles.length - 1)];
+            max((maxWidth - longPressX!) ~/ widget.candleWidth + widget.index,
+                0),
+            widget.candles.length - 1)];
   }
 }
