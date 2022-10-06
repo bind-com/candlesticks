@@ -68,59 +68,28 @@ class _PriceColumnState extends State<PriceColumn> {
                   return AnimatedContainer(
                     duration: Duration(milliseconds: 300),
                     height: priceTileHeight,
-                    width: double.infinity,
+                    width: widget.width,
                     child: Center(
                       child: Row(
                         children: [
+                          Text(
+                            "${HelperFunctions.priceToString(newHigh - priceScale * i)}",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: widget.style.primaryTextColor,
+                              fontSize: 11,
+                            ),
+                          ),
                           Container(
-                            width: widget.width - PRICE_BAR_WIDTH,
+                            width: PRICE_BAR_WIDTH,
                             height: 0.05,
                             color: widget.style.borderColor,
-                          ),
-                          Expanded(
-                            child: Text(
-                              "${HelperFunctions.priceToString(newHigh - priceScale * i)}",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: widget.style.primaryTextColor,
-                                fontSize: 11,
-                              ),
-                            ),
                           ),
                         ],
                       ),
                     ),
                   );
                 }).toList(),
-              ),
-            ),
-            AnimatedPositioned(
-              duration: Duration(milliseconds: 300),
-              right: 0,
-              top: calculatePriceIndicatorTopPadding(
-                widget.chartHeight,
-                widget.low,
-                widget.high,
-              ),
-              child: Row(
-                children: [
-                  Container(
-                    color: widget.lastCandle.isBull
-                        ? widget.style.primaryBull
-                        : widget.style.primaryBear,
-                    child: Center(
-                      child: Text(
-                        HelperFunctions.priceToString(widget.lastCandle.close),
-                        style: TextStyle(
-                          color: widget.style.secondaryTextColor,
-                          fontSize: 11,
-                        ),
-                      ),
-                    ),
-                    width: PRICE_BAR_WIDTH,
-                    height: PRICE_INDICATOR_HEIGHT,
-                  ),
-                ],
               ),
             ),
           ],

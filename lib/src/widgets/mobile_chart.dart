@@ -179,32 +179,6 @@ class _MobileChartState extends State<MobileChart> {
                             flex: 3,
                             child: Stack(
                               children: [
-                                Container(
-                                  child: PriceColumn(
-                                    style: widget.style,
-                                    low: candlesLowPrice,
-                                    high: candlesHighPrice,
-                                    width: constraints.maxWidth,
-                                    chartHeight: chartHeight,
-                                    lastCandle: widget.candles[
-                                        widget.index < 0 ? 0 : widget.index],
-                                    onScale: (delta) {
-                                      if (manualScaleHigh == null) {
-                                        manualScaleHigh = candlesHighPrice;
-                                        manualScaleLow = candlesLowPrice;
-                                      }
-                                      setState(() {
-                                        double deltaPrice = delta /
-                                            chartHeight *
-                                            (manualScaleHigh! - manualScaleLow!);
-                                        manualScaleHigh =
-                                            manualScaleHigh! + deltaPrice;
-                                        manualScaleLow =
-                                            manualScaleLow! - deltaPrice;
-                                      });
-                                    },
-                                  ),
-                                ),
                                 Row(
                                   children: [
                                     Expanded(
@@ -253,67 +227,89 @@ class _MobileChartState extends State<MobileChart> {
                                         ),
                                       ),
                                     ),
-                                    SizedBox(
-                                      width: PRICE_BAR_WIDTH,
-                                    ),
                                   ],
+                                ),
+                                PriceColumn(
+                                  style: widget.style,
+                                  low: candlesLowPrice,
+                                  high: candlesHighPrice,
+                                  width: constraints.maxWidth,
+                                  chartHeight: chartHeight,
+                                  lastCandle: widget.candles[
+                                  widget.index < 0 ? 0 : widget.index],
+                                  onScale: (delta) {
+                                    if (manualScaleHigh == null) {
+                                      manualScaleHigh = candlesHighPrice;
+                                      manualScaleLow = candlesLowPrice;
+                                    }
+                                    setState(() {
+                                      double deltaPrice = delta /
+                                          chartHeight *
+                                          (manualScaleHigh! - manualScaleLow!);
+                                      manualScaleHigh =
+                                          manualScaleHigh! + deltaPrice;
+                                      manualScaleLow =
+                                          manualScaleLow! - deltaPrice;
+                                    });
+                                  },
                                 ),
                               ],
                             ),
                           ),
                           Expanded(
                             flex: 1,
-                            child: Row(
+                            child: Stack(
                               children: [
-                                Expanded(
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      border: Border(
-                                        right: BorderSide(
-                                          color: widget.style.borderColor,
-                                          width: 1,
-                                        ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                      right: BorderSide(
+                                        color: widget.style.borderColor,
+                                        width: 1,
                                       ),
                                     ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(top: 10.0),
-                                      child: VolumeWidget(
-                                        candles: widget.candles,
-                                        barWidth: widget.candleWidth,
-                                        index: widget.index,
-                                        high:
-                                            HelperFunctions.getRoof(volumeHigh),
-                                        bearColor: widget.style.secondaryBear,
-                                        bullColor: widget.style.secondaryBull,
-                                      ),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 10.0),
+                                    child: VolumeWidget(
+                                      candles: widget.candles,
+                                      barWidth: widget.candleWidth,
+                                      index: widget.index,
+                                      high:
+                                          HelperFunctions.getRoof(volumeHigh),
+                                      bearColor: widget.style.secondaryBear,
+                                      bullColor: widget.style.secondaryBull,
                                     ),
                                   ),
                                 ),
-                                SizedBox(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      SizedBox(
-                                        height: DATE_BAR_HEIGHT,
-                                        child: Center(
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                "-${HelperFunctions.addMetricPrefix(HelperFunctions.getRoof(volumeHigh))}",
-                                                style: TextStyle(
-                                                  color:
-                                                      widget.style.borderColor,
-                                                  fontSize: 12,
+                                Positioned(
+                                  right: 0,
+                                  child: SizedBox(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(
+                                          height: DATE_BAR_HEIGHT,
+                                          child: Center(
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  "-${HelperFunctions.addMetricPrefix(HelperFunctions.getRoof(volumeHigh))}",
+                                                  style: TextStyle(
+                                                    color:
+                                                        widget.style.borderColor,
+                                                    fontSize: 12,
+                                                  ),
                                                 ),
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
+                                    width: PRICE_BAR_WIDTH,
                                   ),
-                                  width: PRICE_BAR_WIDTH,
                                 ),
                               ],
                             ),
