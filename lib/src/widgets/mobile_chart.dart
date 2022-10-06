@@ -185,10 +185,7 @@ class _MobileChartState extends State<MobileChart> {
                                       child: Container(
                                         decoration: BoxDecoration(
                                           border: Border(
-                                            right: BorderSide(
-                                              color: widget.style.borderColor,
-                                              width: 1,
-                                            ),
+                                            right: BorderSide(width: 1),
                                           ),
                                         ),
                                         child: AnimatedPadding(
@@ -236,7 +233,7 @@ class _MobileChartState extends State<MobileChart> {
                                   width: constraints.maxWidth,
                                   chartHeight: chartHeight,
                                   lastCandle: widget.candles[
-                                  widget.index < 0 ? 0 : widget.index],
+                                      widget.index < 0 ? 0 : widget.index],
                                   onScale: (delta) {
                                     if (manualScaleHigh == null) {
                                       manualScaleHigh = candlesHighPrice;
@@ -263,10 +260,7 @@ class _MobileChartState extends State<MobileChart> {
                                 Container(
                                   decoration: BoxDecoration(
                                     border: Border(
-                                      right: BorderSide(
-                                        color: widget.style.borderColor,
-                                        width: 1,
-                                      ),
+                                      right: BorderSide(width: 1),
                                     ),
                                   ),
                                   child: Padding(
@@ -275,8 +269,7 @@ class _MobileChartState extends State<MobileChart> {
                                       candles: widget.candles,
                                       barWidth: widget.candleWidth,
                                       index: widget.index,
-                                      high:
-                                          HelperFunctions.getRoof(volumeHigh),
+                                      high: HelperFunctions.getRoof(volumeHigh),
                                       bearColor: widget.style.secondaryBear,
                                       bullColor: widget.style.secondaryBull,
                                     ),
@@ -297,8 +290,8 @@ class _MobileChartState extends State<MobileChart> {
                                                 Text(
                                                   "-${HelperFunctions.addMetricPrefix(HelperFunctions.getRoof(volumeHigh))}",
                                                   style: TextStyle(
-                                                    color:
-                                                        widget.style.borderColor,
+                                                    color: widget
+                                                        .style.borderColor,
                                                     fontSize: 12,
                                                   ),
                                                 ),
