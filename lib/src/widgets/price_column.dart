@@ -63,6 +63,7 @@ class _PriceColumnState extends State<PriceColumn> {
                   widget.chartHeight + 2 * MAIN_CHART_VERTICAL_PADDING - top,
               width: widget.width,
               child: ListView(
+                padding: EdgeInsets.all(15),
                 controller: scrollController,
                 children: List<Widget>.generate(20, (i) {
                   return AnimatedContainer(
