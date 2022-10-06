@@ -46,6 +46,8 @@ class Candlesticks extends StatefulWidget {
 
   final CandleSticksStyle? style;
 
+  final Widget Function(Candle)? tooltipBuilder;
+
   const Candlesticks({
     Key? key,
     required this.candles,
@@ -57,6 +59,7 @@ class Candlesticks extends StatefulWidget {
     this.indicators,
     this.onRemoveIndicator,
     this.style,
+    this.tooltipBuilder,
   })  : assert(candles.length == 0 || candles.length > 1,
             "Please provide at least 2 candles"),
         super(key: key);
@@ -272,6 +275,7 @@ class _CandlesticksState extends State<Candlesticks> {
                     candleWidth: width,
                     candles: widget.candles,
                     index: index,
+                    tooltipBuilder: widget.tooltipBuilder,
                   );
                 }
               },

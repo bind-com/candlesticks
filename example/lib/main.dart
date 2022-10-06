@@ -183,6 +183,7 @@ class _MyAppState extends State<MyApp> {
             builder: (context, snapshot) {
               updateCandlesFromSnapshot(snapshot);
               return Candlesticks(
+                tooltipBuilder: (candle) => CandleChartTooltip(candle: candle),
                 key: Key(currentSymbol + currentInterval),
                 indicators: indicators,
                 candles: candles,
@@ -284,6 +285,7 @@ class SymbolsSearchModal extends StatefulWidget {
 
 class _SymbolSearchModalState extends State<SymbolsSearchModal> {
   String symbolSearch = "";
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -371,6 +373,153 @@ class CustomTextField extends StatelessWidget {
         ),
       ),
       onChanged: onChanged,
+    );
+  }
+}
+
+class CandleChartTooltip extends StatelessWidget {
+  const CandleChartTooltip({
+    Key? key,
+    required this.candle,
+  }) : super(key: key);
+
+  final Candle candle;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: Container(
+        padding: const EdgeInsets.all(7),
+        decoration: BoxDecoration(
+          color: Color(0xFF272727),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const CandleTooltipTitlesColumn(),
+            const SizedBox(width: 20),
+            CandleTooltipValuesColumn(candle: candle),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class CandleTooltipTitlesColumn extends StatelessWidget {
+  const CandleTooltipTitlesColumn({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    final titles = [
+      's.time',
+      's.open',
+      's.high',
+      's.low',
+      's.close',
+      's.chg',
+      's.ampl',
+      's.volume',
+      's.txn',
+    ];
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: List.generate(
+        titles.length * 2 - 1,
+        (index) {
+          final floorIndex = (index / 2).floor();
+          if (index.isOdd) {
+            return const SizedBox(height: 3);
+          }
+          return Text(
+            titles[floorIndex],
+            style: TextStyle(
+              fontSize: 10,
+              color: theme.colorScheme.secondary.withOpacity(0.4),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class CandleTooltipValuesColumn extends StatelessWidget {
+  CandleTooltipValuesColumn({
+    Key? key,
+    required this.candle,
+  }) : super(key: key);
+
+  final Candle candle;
+
+  //final moneyFormatter = MoneyFormatter.withoutCurrency();
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    final defaultTextStyle = TextStyle(
+      fontSize: 10,
+      color: theme.colorScheme.secondary,
+    );
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Text(
+          'date',
+          style: defaultTextStyle,
+        ),
+        const SizedBox(height: 3),
+        Text(
+          'open',
+          style: defaultTextStyle,
+        ),
+        const SizedBox(height: 3),
+        Text(
+          'high',
+          style: defaultTextStyle,
+        ),
+        const SizedBox(height: 3),
+        Text(
+          'low',
+          style: defaultTextStyle,
+        ),
+        const SizedBox(height: 3),
+        Text(
+          'close',
+          style: defaultTextStyle,
+        ),
+        const SizedBox(height: 3),
+        /*PercentText(
+          percent: candle.change,
+          style: const TextStyle(
+            fontSize: 10,
+          ),
+        ),
+        const SizedBox(height: 3),
+        Text(
+          '${candle.amplitude}%',
+          style: defaultTextStyle,
+        ),
+        const SizedBox(height: 3),*/
+        Text(
+          candle.volume.toStringAsFixed(2),
+          style: defaultTextStyle,
+        ),
+        const SizedBox(height: 3),
+        Text(
+          '0',
+          style: defaultTextStyle,
+        ),
+      ],
     );
   }
 }

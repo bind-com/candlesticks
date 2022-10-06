@@ -150,6 +150,11 @@ class _MobileChartState extends State<MobileChart> {
               duration:
                   Duration(milliseconds: manualScaleHigh == null ? 300 : 0),
               builder: (context, double low, _) {
+                if (longPressX != null) {
+                  _tooltipSide = longPressX! < maxWidth / 2
+                      ? TooltipSide.right
+                      : TooltipSide.left;
+                }
                 final currentCandle = longPressX == null
                     ? null
                     : widget.candles[min(
