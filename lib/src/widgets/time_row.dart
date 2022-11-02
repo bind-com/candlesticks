@@ -1,8 +1,9 @@
-import 'package:candlesticks/src/constant/view_constants.dart';
 import 'package:candlesticks/src/models/candle.dart';
 import 'package:candlesticks/src/models/candle_sticks_style.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
+
+import 'package:intl/intl.dart';
 
 class TimeRow extends StatefulWidget {
   final List<Candle> candles;
@@ -65,7 +66,7 @@ class _TimeRowState extends State<TimeRow> {
   /// Day/month text widget
   Text _monthDayText(DateTime _time, Color color) {
     return Text(
-      numberFormat(_time.month) + "/" + numberFormat(_time.day),
+      DateFormat('d. MMM').format(_time),
       style: TextStyle(
         color: color,
         fontSize: 12,
