@@ -4,6 +4,8 @@ import 'package:candlesticks/src/models/main_window_indicator.dart';
 import 'package:candlesticks/src/widgets/mobile_chart.dart';
 import 'package:flutter/material.dart';
 
+MainWindowDataContainer? mainWindowDataContainer;
+
 enum ChartAdjust {
   /// Will adjust chart size by max and min value from visible area
   visibleRange,
@@ -78,8 +80,6 @@ class _CandlesticksState extends State<Candlesticks> {
   /// true when widget.onLoadMoreCandles is fetching new candles.
   bool isCallingLoadMore = false;
 
-  MainWindowDataContainer? mainWindowDataContainer;
-
   @override
   void initState() {
     super.initState();
@@ -99,32 +99,16 @@ class _CandlesticksState extends State<Candlesticks> {
       return;
     }
     if (mainWindowDataContainer == null) {
-      mainWindowDataContainer =
-          MainWindowDataContainer(widget.indicators ?? [], widget.candles);
+      mainWindowDataContainer = MainWindowDataContainer(
+        widget.indicators ?? [],
+        widget.candles,
+      );
     } else {
-      final currentIndicators = widget.indicators ?? [];
-      final oldIndicators = oldWidget.indicators ?? [];
-      if (currentIndicators.length == oldIndicators.length) {
-        for (int i = 0; i < currentIndicators.length; i++) {
-          if (currentIndicators[i] == oldIndicators[i]) {
-            continue;
-          } else {
-            mainWindowDataContainer = MainWindowDataContainer(
-                widget.indicators ?? [], widget.candles);
-            return;
-          }
-        }
-      } else {
-        mainWindowDataContainer =
-            MainWindowDataContainer(widget.indicators ?? [], widget.candles);
-        return;
-      }
-      try {
-        mainWindowDataContainer!.tickUpdate(widget.candles);
-      } catch (_) {
-        mainWindowDataContainer =
-            MainWindowDataContainer(widget.indicators ?? [], widget.candles);
-      }
+      mainWindowDataContainer = MainWindowDataContainer(
+        widget.indicators ?? [],
+        widget.candles,
+      );
+      return;
     }
   }
 
