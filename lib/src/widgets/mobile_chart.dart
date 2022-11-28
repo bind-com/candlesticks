@@ -396,7 +396,7 @@ class _MobileChartState extends State<MobileChart> {
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             padding: EdgeInsets.zero,
-                            primary: widget.style.hoverIndicatorBackgroundColor,
+                            backgroundColor: widget.style.hoverIndicatorBackgroundColor,
                           ),
                           child: Text("Auto"),
                           onPressed: manualScaleHigh == null
@@ -427,5 +427,11 @@ class _MobileChartState extends State<MobileChart> {
             max((maxWidth - longPressX!) ~/ widget.candleWidth + widget.index,
                 0),
             widget.candles.length - 1)];
+  }
+
+  @override
+  void dispose() {
+    mainWindowDataContainer = null;
+    super.dispose();
   }
 }
