@@ -43,12 +43,13 @@ class _TimeRowState extends State<TimeRow> {
   }
 
   /// Calculates [DateTime] of a given candle index
-  DateTime _timeCalculator(int step, int index, Duration dif) {
+  DateTime? _timeCalculator(int step, int index, Duration dif) {
     int candleNumber = (step + 1) ~/ 2 - 10 + index * step + -1;
     DateTime? _time;
     if (candleNumber < 0)
-      _time = widget.candles[0].date.add(Duration(
-          milliseconds: dif.inMilliseconds ~/ -1 * step * candleNumber));
+      _time = null;
+      /*_time = widget.candles[0].date.add(Duration(
+          milliseconds: dif.inMilliseconds ~/ -1 * step * candleNumber));*/
     else if (candleNumber < widget.candles.length)
       _time = widget.candles[candleNumber].date;
     else {
@@ -114,7 +115,8 @@ class _TimeRowState extends State<TimeRow> {
             controller: _scrollController,
             reverse: true,
             itemBuilder: (context, index) {
-              DateTime _time = _timeCalculator(step, index, dif);
+              final _time = _timeCalculator(step, index, dif);
+              if (_time == null) return SizedBox();
               return Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
