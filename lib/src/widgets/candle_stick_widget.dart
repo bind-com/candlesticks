@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:candlesticks/src/models/candle.dart';
 import 'package:flutter/material.dart';
 
@@ -102,8 +100,13 @@ class CandleStickRenderObject extends RenderBox {
   }
 
   /// draws a single candle
-  void paintCandle(PaintingContext context, Offset offset, int index,
-      Candle candle, double range) {
+  void paintCandle(
+    PaintingContext context,
+    Offset offset,
+    int index,
+    Candle candle,
+    double range,
+  ) {
     Color color = candle.isBull ? _bullColor : _bearColor;
 
     Paint paint = Paint()

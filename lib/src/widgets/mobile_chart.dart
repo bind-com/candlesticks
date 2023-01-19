@@ -194,10 +194,13 @@ class _MobileChartState extends State<MobileChart> {
                                             ),
                                           ),
                                           child: AnimatedPadding(
-                                            duration: Duration(milliseconds: 300),
+                                            duration: Duration(
+                                              milliseconds: 300,
+                                            ),
                                             padding: EdgeInsets.symmetric(
-                                                vertical:
-                                                    MAIN_CHART_VERTICAL_PADDING),
+                                              vertical:
+                                                  MAIN_CHART_VERTICAL_PADDING,
+                                            ),
                                             child: RepaintBoundary(
                                               child: Stack(
                                                 children: [
@@ -218,10 +221,10 @@ class _MobileChartState extends State<MobileChart> {
                                                     index: widget.index,
                                                     high: high,
                                                     low: low,
-                                                    bearColor:
-                                                        widget.style.primaryBear,
-                                                    bullColor:
-                                                        widget.style.primaryBull,
+                                                    bearColor: widget
+                                                        .style.primaryBear,
+                                                    bullColor: widget
+                                                        .style.primaryBull,
                                                   ),
                                                 ],
                                               ),
@@ -247,7 +250,8 @@ class _MobileChartState extends State<MobileChart> {
                                       setState(() {
                                         double deltaPrice = delta /
                                             chartHeight *
-                                            (manualScaleHigh! - manualScaleLow!);
+                                            (manualScaleHigh! -
+                                                manualScaleLow!);
                                         manualScaleHigh =
                                             manualScaleHigh! + deltaPrice;
                                         manualScaleLow =
@@ -274,39 +278,11 @@ class _MobileChartState extends State<MobileChart> {
                                         candles: widget.candles,
                                         barWidth: widget.candleWidth,
                                         index: widget.index,
-                                        high: HelperFunctions.getRoof(volumeHigh),
+                                        high:
+                                            HelperFunctions.getRoof(volumeHigh),
                                         bearColor: widget.style.secondaryBear,
                                         bullColor: widget.style.secondaryBull,
                                       ),
-                                    ),
-                                  ),
-                                  Positioned(
-                                    right: 0,
-                                    child: SizedBox(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          SizedBox(
-                                            height: DATE_BAR_HEIGHT,
-                                            child: Center(
-                                              child: Row(
-                                                children: [
-                                                  Text(
-                                                    "-${HelperFunctions.addMetricPrefix(HelperFunctions.getRoof(volumeHigh))}",
-                                                    style: TextStyle(
-                                                      color: widget
-                                                          .style.borderColor,
-                                                      fontSize: 12,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      width: PRICE_BAR_WIDTH,
                                     ),
                                   ),
                                 ],
@@ -354,7 +330,8 @@ class _MobileChartState extends State<MobileChart> {
                           onScaleUpdate: (details) {
                             if (details.scale == 1) {
                               widget.onHorizontalDragUpdate(
-                                  details.focalPoint.dx);
+                                details.focalPoint.dx,
+                              );
                               setState(() {
                                 if (manualScaleHigh != null) {
                                   double deltaPrice =
@@ -388,27 +365,6 @@ class _MobileChartState extends State<MobileChart> {
                           },
                         ),
                       ),
-                      Positioned(
-                        right: 0,
-                        bottom: 0,
-                        width: PRICE_BAR_WIDTH,
-                        height: 20,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.zero,
-                            backgroundColor: widget.style.hoverIndicatorBackgroundColor,
-                          ),
-                          child: Text("Auto"),
-                          onPressed: manualScaleHigh == null
-                              ? null
-                              : () {
-                                  setState(() {
-                                    manualScaleHigh = null;
-                                    manualScaleLow = null;
-                                  });
-                                },
-                        ),
-                      )
                     ],
                   ),
                 );

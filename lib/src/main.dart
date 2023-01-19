@@ -151,7 +151,8 @@ class _CandlesticksState extends State<Candlesticks> {
                   x = x - lastX;
                   index = lastIndex + x ~/ candleWidth;
                   index = max(index, -10);
-                  index = min(index, widget.candles.length - 1);
+                  print(widget.candles.length);
+                  index = min(index, 5);
                 });
               },
               onPanDown: (double value) {
@@ -174,39 +175,6 @@ class _CandlesticksState extends State<Candlesticks> {
             );
           },
         ),
-        if (widget.displayZoomActions == true || widget.actions.isNotEmpty) ...[
-          Row(
-            children: [
-              if (widget.displayZoomActions) ...[
-                ToolBarAction(
-                  onPressed: () {
-                    setState(() {
-                      candleWidth -= 2;
-                      candleWidth = max(candleWidth, 2);
-                    });
-                  },
-                  child: Icon(
-                    Icons.remove,
-                    color: style.borderColor,
-                  ),
-                ),
-                ToolBarAction(
-                  onPressed: () {
-                    setState(() {
-                      candleWidth += 2;
-                      candleWidth = min(candleWidth, 20);
-                    });
-                  },
-                  child: Icon(
-                    Icons.add,
-                    color: style.borderColor,
-                  ),
-                ),
-              ],
-              ...widget.actions
-            ],
-          ),
-        ],
       ],
     );
   }

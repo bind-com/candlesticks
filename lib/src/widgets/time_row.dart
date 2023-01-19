@@ -48,8 +48,6 @@ class _TimeRowState extends State<TimeRow> {
     DateTime? _time;
     if (candleNumber < 0)
       _time = null;
-      /*_time = widget.candles[0].date.add(Duration(
-          milliseconds: dif.inMilliseconds ~/ -1 * step * candleNumber));*/
     else if (candleNumber < widget.candles.length)
       _time = widget.candles[candleNumber].date;
     else {
@@ -62,28 +60,6 @@ class _TimeRowState extends State<TimeRow> {
   /// Fomats number as 2 digit integer
   String numberFormat(int value) {
     return "${value < 10 ? 0 : ""}$value";
-  }
-
-  /// Day/month text widget
-  Text _monthDayText(DateTime _time, Color color) {
-    return Text(
-      DateFormat('d. MMM').format(_time),
-      style: TextStyle(
-        color: color,
-        fontSize: 12,
-      ),
-    );
-  }
-
-  /// Hour/minute text widget
-  Text _hourMinuteText(DateTime _time, Color color) {
-    return Text(
-      numberFormat(_time.hour) + ":" + numberFormat(_time.minute),
-      style: TextStyle(
-        color: color,
-        fontSize: 12,
-      ),
-    );
   }
 
   String dateFormatter(DateTime date) {
@@ -100,16 +76,17 @@ class _TimeRowState extends State<TimeRow> {
 
   @override
   Widget build(BuildContext context) {
-    int step = _stepCalculator();
+    int step = _stepCalculator() * 2;
     final dif =
         widget.candles[0].date.difference(widget.candles[1].date) * step;
+
     return Padding(
       padding: const EdgeInsets.only(right: 1.0),
       child: Stack(
         children: [
           ListView.builder(
             physics: NeverScrollableScrollPhysics(),
-            itemCount: math.max(widget.candles.length, 1000),
+            itemCount: widget.candles.length,
             scrollDirection: Axis.horizontal,
             itemExtent: step * widget.candleWidth,
             controller: _scrollController,
@@ -122,13 +99,17 @@ class _TimeRowState extends State<TimeRow> {
                 children: [
                   Expanded(
                     child: Container(
-                      width: 0.05,
+                      width: 1,
                       color: widget.style.borderColor,
                     ),
                   ),
-                  dif.compareTo(Duration(days: 1)) > 0
-                      ? _monthDayText(_time, widget.style.primaryTextColor)
-                      : _hourMinuteText(_time, widget.style.primaryTextColor),
+                  Text(
+                    DateFormat('yyyy-MM-dd hh:mm').format(_time),
+                    style: TextStyle(
+                      color: widget.style.primaryTextColor,
+                      fontSize: 12,
+                    ),
+                  ),
                 ],
               );
             },
@@ -142,7 +123,7 @@ class _TimeRowState extends State<TimeRow> {
                     color: widget.style.hoverIndicatorBackgroundColor,
                     child: Center(
                       child: Text(
-                        dateFormatter(widget.indicatorTime!),
+                        DateFormat('yyyy-MM-dd hh:mm').format(widget.indicatorTime!),
                         style: TextStyle(
                           color: widget.style.secondaryTextColor,
                           fontSize: 12,

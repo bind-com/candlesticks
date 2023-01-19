@@ -50,9 +50,6 @@ class _PriceColumnState extends State<PriceColumn> {
         MAIN_CHART_VERTICAL_PADDING -
         priceTileHeight / 2;
     return GestureDetector(
-      onVerticalDragUpdate: (details) {
-        widget.onScale(details.delta.dy);
-      },
       child: AbsorbPointer(
         child: Stack(
           children: [
