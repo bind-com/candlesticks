@@ -51,6 +51,7 @@ class MobileChart extends StatefulWidget {
   final void Function(String)? onRemoveIndicator;
 
   final Function() onReachEnd;
+  final Function() onPrepareEnd;
 
   /// Билдер для подсказки, при лонг тапе на свечке
   final Widget Function(Candle)? tooltipBuilder;
@@ -66,6 +67,7 @@ class MobileChart extends StatefulWidget {
     required this.onPanDown,
     required this.onPanEnd,
     required this.onReachEnd,
+    required this.onPrepareEnd,
     required this.mainWindowDataContainer,
     required this.onRemoveIndicator,
     this.tooltipBuilder,
@@ -96,6 +98,12 @@ class _MobileChartState extends State<MobileChart> {
         final int candlesEndIndex = min(
             maxWidth ~/ widget.candleWidth + widget.index,
             widget.candles.length - 1);
+
+        if (candlesEndIndex >= widget.candles.length - 1 - 60) {
+          Future(() {
+            widget.onPrepareEnd();
+          });
+        }
 
         if (candlesEndIndex == widget.candles.length - 1) {
           Future(() {
@@ -148,8 +156,7 @@ class _MobileChartState extends State<MobileChart> {
           builder: (context, double high, _) {
             return TweenAnimationBuilder(
               tween: Tween(begin: candlesLowPrice, end: candlesLowPrice),
-              duration:
-                  Duration(milliseconds: manualScaleHigh == null ? 300 : 0),
+              duration: Duration(milliseconds: 0),
               builder: (context, double low, _) {
                 if (longPressX != null) {
                   _tooltipSide = longPressX! < maxWidth / 2
@@ -195,7 +202,7 @@ class _MobileChartState extends State<MobileChart> {
                                           ),
                                           child: AnimatedPadding(
                                             duration: Duration(
-                                              milliseconds: 300,
+                                              milliseconds: 0,
                                             ),
                                             padding: EdgeInsets.symmetric(
                                               vertical:

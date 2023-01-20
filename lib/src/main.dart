@@ -98,6 +98,11 @@ class _CandlesticksState extends State<Candlesticks> {
     if (widget.candles.length == 0) {
       return;
     }
+
+    if (widget.candles.length < index) {
+      index = -10;
+    }
+
     if (mainWindowDataContainer == null) {
       mainWindowDataContainer = MainWindowDataContainer(
         widget.indicators ?? [],
@@ -159,6 +164,15 @@ class _CandlesticksState extends State<Candlesticks> {
                 lastIndex = index;
               },
               onReachEnd: () {
+                if (isCallingLoadMore == false &&
+                    widget.onLoadMoreCandles != null) {
+                  isCallingLoadMore = true;
+                  widget.onLoadMoreCandles!().then((_) {
+                    isCallingLoadMore = false;
+                  });
+                }
+              },
+              onPrepareEnd: () {
                 if (isCallingLoadMore == false &&
                     widget.onLoadMoreCandles != null) {
                   isCallingLoadMore = true;

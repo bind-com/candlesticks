@@ -54,7 +54,7 @@ class _PriceColumnState extends State<PriceColumn> {
         child: Stack(
           children: [
             AnimatedPositioned(
-              duration: Duration(milliseconds: 300),
+              duration: Duration(milliseconds: 0),
               top: top,
               height:
                   widget.chartHeight + 2 * MAIN_CHART_VERTICAL_PADDING - top,
@@ -64,7 +64,7 @@ class _PriceColumnState extends State<PriceColumn> {
                 controller: scrollController,
                 children: List<Widget>.generate(20, (i) {
                   return AnimatedContainer(
-                    duration: Duration(milliseconds: 300),
+                    duration: Duration(milliseconds: 0),
                     height: priceTileHeight,
                     width: PRICE_BAR_WIDTH,
                     child: Align(
