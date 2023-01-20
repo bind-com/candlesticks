@@ -144,7 +144,7 @@ class _MobileChartState extends State<MobileChart> {
 
         return TweenAnimationBuilder(
           tween: Tween(begin: candlesHighPrice, end: candlesHighPrice),
-          duration: Duration(milliseconds: manualScaleHigh == null ? 300 : 0),
+          duration: Duration(milliseconds: 0),
           builder: (context, double high, _) {
             return TweenAnimationBuilder(
               tween: Tween(begin: candlesLowPrice, end: candlesLowPrice),

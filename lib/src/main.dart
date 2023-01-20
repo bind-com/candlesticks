@@ -151,8 +151,7 @@ class _CandlesticksState extends State<Candlesticks> {
                   x = x - lastX;
                   index = lastIndex + x ~/ candleWidth;
                   index = max(index, -10);
-                  print(widget.candles.length);
-                  index = min(index, 5);
+                  index = min(index, widget.candles.length - 1);
                 });
               },
               onPanDown: (double value) {
