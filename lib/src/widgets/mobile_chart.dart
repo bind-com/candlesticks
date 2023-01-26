@@ -102,8 +102,6 @@ class _MobileChartState extends State<MobileChart> {
         final maxCandlesOnScreen = maxWidth ~/ widget.candleWidth;
         final prepareOnCandlesBeforeEnd = 2 * maxCandlesOnScreen;
 
-        print(prepareOnCandlesBeforeEnd);
-
         if (candlesEndIndex >=
             widget.candles.length - prepareOnCandlesBeforeEnd) {
           Future(() {
@@ -172,11 +170,11 @@ class _MobileChartState extends State<MobileChart> {
                 final currentCandle = longPressX == null
                     ? null
                     : widget.candles[min(
-                    max(
-                        (maxWidth - longPressX!) ~/ widget.candleWidth +
-                            widget.index,
-                        0),
-                    widget.candles.length - 1)];
+                        max(
+                            (maxWidth - longPressX!) ~/ widget.candleWidth +
+                                widget.index,
+                            0),
+                        widget.candles.length - 1)];
                 return Container(
                   color: widget.style.background,
                   child: Stack(
@@ -212,7 +210,7 @@ class _MobileChartState extends State<MobileChart> {
                                             ),
                                             padding: EdgeInsets.symmetric(
                                               vertical:
-                                              MAIN_CHART_VERTICAL_PADDING,
+                                                  MAIN_CHART_VERTICAL_PADDING,
                                             ),
                                             child: RepaintBoundary(
                                               child: Stack(
@@ -223,14 +221,14 @@ class _MobileChartState extends State<MobileChart> {
                                                         .indicatorComponentData,
                                                     index: widget.index,
                                                     candleWidth:
-                                                    widget.candleWidth,
+                                                        widget.candleWidth,
                                                     low: low,
                                                     high: high,
                                                   ),
                                                   CandleStickWidget(
                                                     candles: widget.candles,
                                                     candleWidth:
-                                                    widget.candleWidth,
+                                                        widget.candleWidth,
                                                     index: widget.index,
                                                     high: high,
                                                     low: low,
@@ -254,7 +252,7 @@ class _MobileChartState extends State<MobileChart> {
                                     width: constraints.maxWidth,
                                     chartHeight: chartHeight,
                                     lastCandle: widget.candles[
-                                    widget.index < 0 ? 0 : widget.index],
+                                        widget.index < 0 ? 0 : widget.index],
                                     onScale: (delta) {
                                       if (manualScaleHigh == null) {
                                         manualScaleHigh = candlesHighPrice;
@@ -292,7 +290,7 @@ class _MobileChartState extends State<MobileChart> {
                                         barWidth: widget.candleWidth,
                                         index: widget.index,
                                         high:
-                                        HelperFunctions.getRoof(volumeHigh),
+                                            HelperFunctions.getRoof(volumeHigh),
                                         bearColor: widget.style.secondaryBear,
                                         bullColor: widget.style.secondaryBull,
                                       ),
@@ -309,13 +307,13 @@ class _MobileChartState extends State<MobileChart> {
                       ),
                       longPressX != null
                           ? Positioned(
-                        child: Container(
-                          width: 1,
-                          height: maxHeight - 8,
-                          color: widget.style.mobileCandleHoverColor,
-                        ),
-                        right: (maxWidth - longPressX!),
-                      )
+                              child: Container(
+                                width: 1,
+                                height: maxHeight - 8,
+                                color: widget.style.mobileCandleHoverColor,
+                              ),
+                              right: (maxWidth - longPressX!),
+                            )
                           : Container(),
                       if (widget.tooltipBuilder != null && longPressX != null)
                         Align(
@@ -357,7 +355,7 @@ class _MobileChartState extends State<MobileChart> {
                                 }
                               });
                             }
-                            widget.onScaleUpdate(details.scale);
+                            widget.onScaleUpdate(details.horizontalScale);
                           },
                           onScaleStart: (details) {
                             widget.onPanDown(details.localFocalPoint.dx);
@@ -393,9 +391,9 @@ class _MobileChartState extends State<MobileChart> {
     return longPressX == null
         ? null
         : widget.candles[min(
-        max((maxWidth - longPressX!) ~/ widget.candleWidth + widget.index,
-            0),
-        widget.candles.length - 1)];
+            max((maxWidth - longPressX!) ~/ widget.candleWidth + widget.index,
+                0),
+            widget.candles.length - 1)];
   }
 
   @override

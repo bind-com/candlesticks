@@ -80,6 +80,8 @@ class _CandlesticksState extends State<Candlesticks> {
   /// true when widget.onLoadMoreCandles is fetching new candles.
   bool isCallingLoadMore = false;
 
+  double beforeScaleCandleWidth = 6;
+
   @override
   void initState() {
     super.initState();
@@ -140,16 +142,17 @@ class _CandlesticksState extends State<Candlesticks> {
               mainWindowDataContainer: mainWindowDataContainer!,
               chartAdjust: widget.chartAdjust,
               onScaleUpdate: (double scale) {
-                scale = max(0.90, scale);
-                scale = min(1.1, scale);
+                /*scale = max(0.90, scale);
+                scale = min(1.1, scale);*/
                 setState(() {
-                  candleWidth *= scale;
+                  candleWidth = beforeScaleCandleWidth * scale;
                   candleWidth = min(candleWidth, 20);
                   candleWidth = max(candleWidth, 2);
                 });
               },
               onPanEnd: () {
                 lastIndex = index;
+                beforeScaleCandleWidth = candleWidth;
               },
               onHorizontalDragUpdate: (double x) {
                 setState(() {
