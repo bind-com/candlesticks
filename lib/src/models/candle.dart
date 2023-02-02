@@ -1,7 +1,9 @@
+import 'package:equatable/equatable.dart';
+
 /// Candle model wich holds a single candle data.
 /// It contains five required double variables that hold a single candle data: high, low, open, close and volume.
 /// It can be instantiated using its default constructor or fromJson named custructor.
-class Candle {
+class Candle extends Equatable {
   /// DateTime for the candle
   final DateTime date;
 
@@ -49,4 +51,16 @@ class Candle {
         volume = double.parse(json[5]),
         change = 0,
         amplitude = 0;
+
+  @override
+  List<Object?> get props => [
+        date,
+        high,
+        low,
+        open,
+        close,
+        volume,
+        change,
+        amplitude,
+      ];
 }
