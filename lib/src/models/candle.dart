@@ -29,6 +29,9 @@ class Candle extends Equatable {
 
   final double amplitude;
 
+  /// coin price in btc
+  final double priceInBtc;
+
   bool get isBull => open <= close;
 
   Candle({
@@ -40,6 +43,7 @@ class Candle extends Equatable {
     required this.volume,
     required this.change,
     required this.amplitude,
+    required this.priceInBtc,
   });
 
   Candle.fromJson(List<dynamic> json)
@@ -50,7 +54,8 @@ class Candle extends Equatable {
         close = double.parse(json[4]),
         volume = double.parse(json[5]),
         change = 0,
-        amplitude = 0;
+        amplitude = 0,
+        priceInBtc = 0;
 
   @override
   List<Object?> get props => [
@@ -62,5 +67,6 @@ class Candle extends Equatable {
         volume,
         change,
         amplitude,
+        priceInBtc,
       ];
 }
